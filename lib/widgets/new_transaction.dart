@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
 
-import './user_transactions.dart';
-
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function addTx;
 
   NewTransaction(this.addTx);
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
+
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+
+    widget.addTx(
+      enteredTitle,
+      enteredAmount,
+    );
+
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,30 +40,25 @@ class NewTransaction extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextField(
-              // onChanged: (val) => titleInput = val,
+              decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
-              decoration: InputDecoration(
-                labelText: 'Title',
-              ),
+              onSubmitted: (_) => submitData(),
+              // onChanged: (val) {
+              //   titleInput = val;
+              // },
             ),
             TextField(
-              // onChanged: (val) => amountInput = val,
+              keyboardType: TextInputType.number,
+              // keyboardType: TextInputType.numberWithOptions(decimal: true), //IOS
+              decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
-              decoration: InputDecoration(
-                labelText: 'Amount',
-              ),
+              onSubmitted: (_) => submitData(),
             ),
             FlatButton(
-              child: Text('Add transaction'),
+              child: Text('Add Transaction'),
               textColor: Colors.purple,
-              onPressed: () {
-                addTx(
-                  titleController.text,
-                  double.parse(amountController.text),
-                );
-                // print(titleController.text);
-              },
-            )
+              onPressed: submitData,
+            ),
           ],
         ),
       ),
