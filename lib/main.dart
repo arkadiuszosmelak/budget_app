@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_budget/widgets/transaction_list.dart';
+import './widgets/user_transactions.dart';
 
 void main() => runApp(BudgetApp());
 
@@ -37,37 +37,7 @@ class MyHomePage extends StatelessWidget {
               elevation: 5,
             ),
           ),
-          Card(
-            elevation: 5,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  TextField(
-                    // onChanged: (val) => titleInput = val,
-                    controller: titleController,
-                    decoration: InputDecoration(
-                      labelText: 'Title',
-                    ),
-                  ),
-                  TextField(
-                    // onChanged: (val) => amountInput = val,
-                    controller: amountController,
-                    decoration: InputDecoration(
-                      labelText: 'Amount',
-                    ),
-                  ),
-                  FlatButton(
-                    child: Text('Add transaction'),
-                    textColor: Colors.purple,
-                    onPressed: () {},
-                  )
-                ],
-              ),
-            ),
-          ),
-          TransactionList()
+          UserTransactions()
         ],
       ),
     );
